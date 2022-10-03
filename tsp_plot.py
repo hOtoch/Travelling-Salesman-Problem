@@ -3,7 +3,7 @@
 
 import re
 import sys
-import matplotlib.pyplot as plt
+import matplotlib as plt
 import math
 
 name_key = 'NAME'

@@ -23,11 +23,11 @@ int main(int argc, char* argv[]){
         return 0;
     }
 
-    fgets(nameFile,50,entry); 
-    fgets(commentFile,100,entry);
-    fgets(typeFile,50,entry);
-    fgets(dimensionFile,50,entry);
-    fgets(weightTypeFile,50,entry);
+    fgets(nameFile,50,entry); /* Salva nome do arquivo */
+    fgets(commentFile,100,entry); /* Salva o comentario do arquivo */
+    fgets(typeFile,50,entry); /* Salva o tipo do arquivo */
+    fgets(dimensionFile,50,entry); /* Salva a dimensão do arquivo */
+    fgets(weightTypeFile,50,entry); /* Salva o tipo de peso do arquivo */
 
 
     char* pDimension = strtok(dimensionFile,":");
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
 
     int numVertices = atoi(pDimension);
     
-    // Criando vetor de Nós
+    /* Criando vetor de vértices */
 
     Node** arrayNode = (Node**)malloc(numVertices * sizeof(Node*));
 
@@ -45,17 +45,14 @@ int main(int argc, char* argv[]){
 
     fgets(line,100,entry); // Ignora o "NODE_COORD_SECTION"
 
+    /* Leitura e atribuição das coordenadas aos vértices (Nodes) */
+
     while(!feof(entry)){
         fgets(line,100,entry);
-        if(line == "EOF"){
+        
+        if(strcmp(line,"EOF") == 0){     
             break;
         }
-
-        if(line==NULL){
-            continue;
-        }
-
-        printf("%s\n",line);
 
         Node* node = criaNode();
 
@@ -68,14 +65,26 @@ int main(int argc, char* argv[]){
         auxLine = strtok(NULL, " ");
         node->y = atof(auxLine);
 
-        //printf("%d - x : %f - y: %f\n",node->id,node->x,node->y);  
-       
+        arrayNode[getID(node) - 1] = node;
 
-        
-        free(node);
+        //printf("%d - x : %f - y: %f\n",node->id,node->x,node->y);  
+      
+        //free(node);
     }
 
-    
+    /* Criação da matriz de distâncias */
+
+    double** matrizDist = (double**)malloc(numVertices * sizeof(double*));
+    //double matrizDist[numVertices][numVertices];
+    double dist;
+
+    for(int i = 0; i < numVertices; i++){
+        for(int j = 0; j < numVertices; j++){       
+            dist = calculaDist(i+1,j+1,arrayNode,numVertices);
+            printf("%.2f ",dist);
+        }
+        printf("\n");
+    }
       
 
     

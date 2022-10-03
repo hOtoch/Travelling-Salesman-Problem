@@ -1,0 +1,3 @@
+C:/Users/hugoo/OneDrive/Área de Trabalho/Estudo/EngComp/ED 2/trab01/myVersion/Travelling-Salesman-Problem/cmake-build-debug/CMakeFiles/Travelling_Salesman_Problem.dir
+C:/Users/hugoo/OneDrive/Área de Trabalho/Estudo/EngComp/ED 2/trab01/myVersion/Travelling-Salesman-Problem/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/hugoo/OneDrive/Área de Trabalho/Estudo/EngComp/ED 2/trab01/myVersion/Travelling-Salesman-Problem/cmake-build-debug/CMakeFiles/rebuild_cache.dir

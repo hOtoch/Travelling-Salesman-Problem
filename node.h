@@ -2,6 +2,7 @@
 #define NODE_H_
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 typedef struct node{
     int id;
@@ -10,6 +11,14 @@ typedef struct node{
 }Node;
 
 Node* criaNode();
+
+double calculaDist(int i, int j,Node** vNodes,int numVertices);
+
+int getID(Node* n);
+
+double getX(Node* n);
+
+double getY(Node* n);
 
 
 #endif
