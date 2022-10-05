@@ -9,11 +9,20 @@ Arco* criaArco(Node* n1, Node* n2, double peso){
     return arch;
 }
 
-// int verificaArco(int i,int j, Arco** array,int size){
-//     if(i == j) return 0;
+void sortArcos(Arco** array,int hi){ // Insertion sort
+    for(int i = 1; i < hi; i++){
+        for(int j = i; j > 0; j--){
+            //compexch(array[j-1],array[j]);
+            
+            if(array[j]->peso < array[j-1]->peso){
+                Arco* aux = array[j-1];
+                array[j-1] = array[j];
+                array[j] = aux;
+            }
+        }
+    }
+}
 
-//     for(int i = 0; i < size; i++){
-//         if(array[i] == NULL) return 1;
-//         if((array[i]->leftNode->id == i && array[i]->rightNode->id == j) || (array[i]->rightNode->id == i && array[i]->leftNode->id == j)) return 0;
-//     }
-// }
+double getPeso(Arco* a){
+    return a->peso;
+}

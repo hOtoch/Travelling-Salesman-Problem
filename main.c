@@ -3,6 +3,7 @@
 #include <string.h>
 #include "node.h"
 #include "arco.h"
+#include "MST.h"
 
 
 int main(int argc, char* argv[]){
@@ -92,8 +93,6 @@ int main(int argc, char* argv[]){
 
     Arco** grafo = (Arco**)malloc(nArcos*sizeof(Arco*));
 
-   
-
     int sizeAtual = 0;
     Node* n1,*n2;
 
@@ -113,23 +112,50 @@ int main(int argc, char* argv[]){
         }
     }
 
+    /* Libera matriz */
+    for(int i = 0; i < numVertices; i++){
+        free(matrizDist[i]);
+    }
+    free(matrizDist);
+
     //printf("%d arcos e %d vertices\n",sizeAtual,numVertices);
 
+    
+
+    /* Ordenando os arcos do grafo com o Insertion sort (qsort nao funcionou) */
+    sortArcos(grafo,nArcos);
+    // for(int i = 1000; i< nArcos;i++){
+    //     printf("(%d - %d) : %.2f\n",grafo[i]->leftNode->id,grafo[i]->rightNode->id,grafo[i]->peso);
+    // }
 
 
-    for(int i = 0; i< nArcos;i++){
-        printf("(%d - %d) : %.2f\n",grafo[i]->leftNode->id,grafo[i]->rightNode->id,grafo[i]->peso);
+
+    /* Criação da MST */
+
+    int* mst = MST_init(numVertices);
+    Node* nA1;
+    Node* nA2;
+    double pesoArco;
+    Arco** arcosMST = (Arco**)malloc((numVertices-1)*sizeof(Arco*)); // Array de arcos utilizados na MST
+    int posAtual = 0;
+
+    for(int i = 0 ; i< nArcos;i++){
+        nA1 = grafo[i]->leftNode;
+        nA2 = grafo[i]->rightNode;
+        pesoArco = grafo[i]->peso;
+
+        if(MST_find(nA1->id-1,mst) != MST_find(nA2->id-1,mst)){
+            MST_union(nA1->id-1,nA2->id-1,mst);
+            arcosMST[posAtual] = grafo[i];
+            posAtual++;
+        }
     }
 
+    printf("%d\n",numVertices);
 
-
-
-
-
-
-    
-    
-      
+    for(int i = 0; i < numVertices-1;i++){
+        printf("\n%d - (%d - %d) : %.2f\n",i,arcosMST[i]->rightNode->id,arcosMST[i]->leftNode->id,arcosMST[i]->peso);
+    }
 
     
     

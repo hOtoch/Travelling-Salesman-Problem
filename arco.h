@@ -13,7 +13,11 @@ typedef struct arco{
 
 Arco* criaArco(Node* n1, Node* n2, double peso);
 
-// int verificaArco(int i,int j, Arco** array,int size);
+int compararPeso(const void* x, const void* y);
+
+double getPeso(Arco* a);
+
+void sortArcos(Arco** array,int hi);
 
 
 #endif
