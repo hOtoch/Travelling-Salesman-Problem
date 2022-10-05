@@ -8,4 +8,6 @@ include_directories(.)
 add_executable(Travelling_Salesman_Problem
         main.c
         node.c
-        node.h)
+        node.h
+        MST.c
+        MST.h)

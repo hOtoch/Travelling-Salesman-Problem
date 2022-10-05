@@ -14,6 +14,8 @@ Node* criaNode();
 
 double calculaDist(int i, int j,Node** vNodes,int numVertices);
 
+Node* findNode(int i,Node** array,int size);
+
 int getID(Node* n);
 
 double getX(Node* n);

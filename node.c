@@ -11,7 +11,7 @@ double calculaDist(int i, int j,Node** vNodes,int numVertices){
     double deltaX,deltaY,dist;
     Node* n1;
     Node* n2;
-
+    
     for(int x = 0; x < numVertices;x++){
        
         if(i == getID(vNodes[x])){           
@@ -22,12 +22,20 @@ double calculaDist(int i, int j,Node** vNodes,int numVertices){
         }
     }
 
-    deltaX = n1->x - n2->x;
-    deltaY = n1->y - n2->y;
+    deltaX = n2->x - n1->x;
+    deltaY = n2->y - n1->y;
 
     dist = sqrt(pow(deltaX,2) + pow(deltaY,2));
 
     return dist;
+}
+
+Node* findNode(int i,Node** array,int size){
+    for(int j = 0; j < size; j++){
+        if(array[j]->id == i) return array[j];
+    }
+
+    return NULL;
 }
 
 int getID(Node* n){
