@@ -38,6 +38,10 @@ Node* findNode(int i,Node** array,int size){
     return NULL;
 }
 
+void liberaNode(Node* a){
+    free(a);
+}
+
 int getID(Node* n){
     return n->id;
 }

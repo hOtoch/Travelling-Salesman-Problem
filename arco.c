@@ -23,6 +23,37 @@ void sortArcos(Arco** array,int hi){ // Insertion sort
     }
 }
 
+int searchNext(int idNode,Arco** array,int size){
+    for(int i = 0;i < size; i++){
+        if(array[i] != NULL){
+            if(array[i]->leftNode->id == idNode){
+                idNode = array[i]->rightNode->id;
+                array[i] = NULL;
+                return idNode;
+            }
+            if(array[i]->rightNode->id == idNode){
+                idNode = array[i]->leftNode->id;
+                array[i] = NULL;
+                return idNode;
+            }
+        }
+        
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+void liberaArco(Arco* a){
+    free(a);
+}
+
 double getPeso(Arco* a){
     return a->peso;
 }

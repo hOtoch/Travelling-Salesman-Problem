@@ -16,6 +16,8 @@ double calculaDist(int i, int j,Node** vNodes,int numVertices);
 
 Node* findNode(int i,Node** array,int size);
 
+void liberaNode(Node* a);
+
 int getID(Node* n);
 
 double getX(Node* n);

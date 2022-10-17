@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "MST.h"
 #include "node.h"
 #include "arco.h"
-#include "MST.h"
+#include "tree.h"
 
 
 int main(int argc, char* argv[]){
@@ -103,8 +104,6 @@ int main(int argc, char* argv[]){
             n1 = findNode(i+1,arrayNode,numVertices);
             n2 = findNode(j+1,arrayNode,numVertices);
 
-            //printf("(%d - %d) : %.2f\n",n1->id,n2->id,matrizDist[i][j]);
-
             grafo[sizeAtual] = criaArco(n1,n2,matrizDist[i][j]);
             sizeAtual++;
             
@@ -118,16 +117,10 @@ int main(int argc, char* argv[]){
     }
     free(matrizDist);
 
-    //printf("%d arcos e %d vertices\n",sizeAtual,numVertices);
-
     
 
     /* Ordenando os arcos do grafo com o Insertion sort (qsort nao funcionou) */
     sortArcos(grafo,nArcos);
-    // for(int i = 1000; i< nArcos;i++){
-    //     printf("(%d - %d) : %.2f\n",grafo[i]->leftNode->id,grafo[i]->rightNode->id,grafo[i]->peso);
-    // }
-
 
 
     /* Criação da MST */
@@ -151,11 +144,37 @@ int main(int argc, char* argv[]){
         }
     }
 
-    printf("%d\n",numVertices);
 
-    for(int i = 0; i < numVertices-1;i++){
-        printf("\n%d - (%d - %d) : %.2f\n",i,arcosMST[i]->rightNode->id,arcosMST[i]->leftNode->id,arcosMST[i]->peso);
+    // for(int i = 0; i < numVertices-1;i++){
+    //     printf("\n%d - (%d - %d) : %.2f\n",i,arcosMST[i]->rightNode->id,arcosMST[i]->leftNode->id,arcosMST[i]->peso);
+    // }
+
+    /* Criando a arvore*/
+
+    
+    int idAtual = 1;
+    Tree* root = NULL;
+
+    for(int i = 0; i < numVertices; i++){
+        root = inserir(root,idAtual);
+        printf("%d\n",idAtual);
+        idAtual = searchNext(idAtual,arcosMST,numVertices-1);
     }
+
+    //imprimir_pre_ordem(root);
+
+    
+
+    
+
+   
+   
+
+    
+
+
+
+
 
     
     
