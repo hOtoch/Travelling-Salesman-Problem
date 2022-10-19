@@ -5,58 +5,32 @@
 Tree *criar_arvore(int valor) {
     Tree *arvore = (Tree *) malloc(sizeof(Tree));
     arvore->valor = valor;
+    arvore->pesoTotal = 0;
     arvore->esq = NULL;
     arvore->dir = NULL;
     return arvore;
 }
 
-Tree *inserir(Tree *arvore, int valor) {
+void inserir(Tree *arvore, int valor,Arco** arcos,int size) {
+    int id1,id2;
     if (arvore == NULL) {
-        return criar_arvore(valor);
+        arvore = criar_arvore(valor);
     }
-    
-    if(valor == 0){
-        return;
-    }
-    
-    arvore->esq = inserir(arvore->esq, valor);//se valor < arvore->valor
-   
-    arvore->dir = inserir(arvore->dir, valor);
-    
+    printf("%d\n",valor);
 
+
+    id1= searchNext(valor,arcos,size); 
+    if(id1 != 0){
+        inserir(arvore->esq, id1,arcos,size);
+    }else return;
+
+
+    id2 = searchNext(valor,arcos,size);
+    if(id2 != 0){
+        inserir(arvore->dir, id2,arcos,size);
+    }else return;
     
-    
-    
-    return arvore;
 }
-
-// Tree *remover(Tree *arvore, int valor) {
-//     if (arvore == NULL) {
-//         return arvore;
-//     }
-//     if (valor < arvore->valor) {
-//         arvore->esq = remover(arvore->esq, valor);
-//     } else if (valor > arvore->valor) {
-//         arvore->dir = remover(arvore->dir, valor);
-//     } else {
-//         if (arvore->esq == NULL) {
-//             Tree *temp = arvore->dir;
-//             free(arvore);
-//             return temp;
-//         } else if (arvore->dir == NULL) {
-//             Tree *temp = arvore->esq;
-//             free(arvore);
-//             return temp;
-//         }
-//         Tree *temp = arvore->dir;
-//         while (temp->esq != NULL) {
-//             temp = temp->esq;
-//         }
-//         arvore->valor = temp->valor;
-//         arvore->dir = remover(arvore->dir, temp->valor);
-//     }
-//     return arvore;
-// }
 
 // Tree *pre_ordem_iterativo(Tree *arvore) {
 //     if (arvore == NULL) {

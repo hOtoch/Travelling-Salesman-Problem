@@ -3,7 +3,6 @@
 #include <string.h>
 #include "MST.h"
 #include "node.h"
-#include "arco.h"
 #include "tree.h"
 
 
@@ -151,15 +150,10 @@ int main(int argc, char* argv[]){
 
     /* Criando a arvore*/
 
-    
-    int idAtual = 1;
+
     Tree* root = NULL;
 
-    for(int i = 0; i < numVertices; i++){
-        root = inserir(root,idAtual);
-        printf("%d\n",idAtual);
-        idAtual = searchNext(idAtual,arcosMST,numVertices-1);
-    }
+    inserir(root,1,arcosMST,numVertices-1,0);
 
     //imprimir_pre_ordem(root);
 
