@@ -19,11 +19,19 @@ double getPeso(Arco* a);
 
 void liberaArco(Arco* a);
 
-void sortArcos(Arco** array,int hi);
+void sortArcos(Arco** array,int lo,int hi);
+
+void swap(Arco** array,int i, int j);
+
+void insertion_sort_med(Arco** a, int lo, int hi);
+
+int partition_med(Arco**a, int lo, int hi);
 
 void preOrder(Node* nd,Node** N_array,Arco** A_array,int size);
 
 int searchNext(int idNode,Arco** array,int size);
+
+double calculaPesoTotal(Arco** array,int size);
 
 
 #endif

@@ -9,19 +9,73 @@ Arco* criaArco(Node* n1, Node* n2, double peso){
     return arch;
 }
 
-void sortArcos(Arco** array,int hi){ // Insertion sort
-    for(int i = 1; i < hi; i++){
-        for(int j = i; j > 0; j--){
-            //compexch(array[j-1],array[j]);
-            
-            if(array[j]->peso < array[j-1]->peso){
-                Arco* aux = array[j-1];
-                array[j-1] = array[j];
-                array[j] = aux;
-            }
+// int median_of_3(Arco** a, int lo, int hi){
+//     int mid = (lo + hi)/2;
+//     if(a[mid]->peso < a[lo]->peso){
+//         swap(a,lo,mid);
+//     }
+//     if(a[hi] < a[lo]){
+//         swap(a,lo,hi);
+//     }
+//     if(a[hi] < a[mid]){
+//         swap(a,hi,mid);
+//     }
+
+//     swap(a,mid,hi-1)
+
+
+// }
+
+void sortArcos(Arco** array,int lo, int hi){ // Quick sort
+    //int CUTOFF = 10;
+
+    // if(hi <= lo + CUTOFF - 1){
+    //     insertion_sort_med(array, lo, hi);
+    //     return;
+    // }
+
+    if(hi <= lo) return;
+    
+    int j = partition_med(array, lo, hi);
+    
+    sortArcos(array, lo, j-1);
+    sortArcos(array, j+1, hi);
+    
+}
+
+
+void insertion_sort_med(Arco** a, int lo, int hi){
+    int i, j;
+    for(i = lo; i <= hi; i++){
+        for(j = i; j > lo && a[j]->peso < a[j-1]->peso; j--){
+            swap(a,j,j-1);         
         }
     }
 }
+
+
+void swap(Arco** array, int i, int j){
+    Arco* aux;
+    aux = array[i];
+    array[i] = array[j];
+    array[j] = aux;
+}
+
+int partition_med(Arco** a , int lo, int hi){
+    int i = lo, j = hi+1;
+    double v = a[lo]->peso;
+
+    while(1){
+        while(a[++i]->peso < v) if(i == hi) break;
+        while(v < a[--j]->peso) if(j == lo) break;
+        if(i >= j) break;
+        swap(a,i,j);
+    }
+    swap(a,lo,j);
+    return j;
+}
+
+
 
 int searchNext(int idNode,Arco** array,int size){
     for(int i = 0;i < size; i++){
@@ -42,11 +96,13 @@ int searchNext(int idNode,Arco** array,int size){
     return 0;
 }
 
-
-
-
-
-
+double calculaPesoTotal(Arco** array,int size){
+    double pesoTotal = 0;
+    for(int i = 0; i < size; i++){
+        pesoTotal += getPeso(array[i]);
+    }
+    return pesoTotal;
+}
 
 
 
@@ -57,3 +113,4 @@ void liberaArco(Arco* a){
 double getPeso(Arco* a){
     return a->peso;
 }
+

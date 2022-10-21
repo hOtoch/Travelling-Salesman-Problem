@@ -16,7 +16,7 @@ void inserir(Tree *arvore, int valor,Arco** arcos,int size) {
     if (arvore == NULL) {
         arvore = criar_arvore(valor);
     }
-    printf("%d\n",valor);
+    //printf("%d\n",valor);
 
 
     id1= searchNext(valor,arcos,size); 
@@ -30,8 +30,8 @@ void inserir(Tree *arvore, int valor,Arco** arcos,int size) {
         inserir(arvore->dir, id2,arcos,size);
     }else return;
     
-}
 
+}
 // Tree *pre_ordem_iterativo(Tree *arvore) {
 //     if (arvore == NULL) {
 //         return NULL;

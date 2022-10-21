@@ -4,9 +4,11 @@
 #include "MST.h"
 #include "node.h"
 #include "tree.h"
+#include "time.h"
 
 
 int main(int argc, char* argv[]){
+    clock_t start,stop;
     if(argc < 2){
         printf("ERRO: Informe o arquivo de entrada.\n");
         return 0;
@@ -14,6 +16,8 @@ int main(int argc, char* argv[]){
 
     /* Leitura do arquivo */
     FILE* entry;
+    start = clock();
+
     
     char* fName = argv[1];
 
@@ -48,6 +52,8 @@ int main(int argc, char* argv[]){
     fgets(line,100,entry); // Ignora o "NODE_COORD_SECTION"
 
     /* Leitura e atribuição das coordenadas aos vértices (Nodes) */
+
+    
 
     while(!feof(entry)){
         fgets(line,100,entry);
@@ -89,6 +95,8 @@ int main(int argc, char* argv[]){
 
     /* Criação do array de arcos (grafo) */
 
+
+
     int nArcos = (numVertices*(numVertices-1))/2;  /* Calculando o número de arcos considerando G um grafo completo */
 
     Arco** grafo = (Arco**)malloc(nArcos*sizeof(Arco*));
@@ -118,9 +126,27 @@ int main(int argc, char* argv[]){
 
     
 
-    /* Ordenando os arcos do grafo com o Insertion sort (qsort nao funcionou) */
-    sortArcos(grafo,nArcos);
+    // for(int i = 0; i < numVertices-1;i++){
+    //         printf("\n%d - (%d - %d) : %.2f\n",i,grafo[i]->rightNode->id,grafo[i]->leftNode->id,grafo[i]->peso);
+    // }
 
+    // printf("\n---------------------------------------\n");
+
+    /* Ordenando os arcos do grafo com o Insertion sort (qsort nao funcionou) */
+
+    
+
+    sortArcos(grafo,0,nArcos-1); // fazer quick sort
+
+
+    
+
+    for(int i = 0; i < nArcos;i++){
+        //printf("\n%d - (%d - %d) : %.2f\n",i,grafo[i]->rightNode->id,grafo[i]->leftNode->id,grafo[i]->peso);
+    }
+
+    
+    
 
     /* Criação da MST */
 
@@ -143,23 +169,30 @@ int main(int argc, char* argv[]){
         }
     }
 
+    
+
 
     // for(int i = 0; i < numVertices-1;i++){
     //     printf("\n%d - (%d - %d) : %.2f\n",i,arcosMST[i]->rightNode->id,arcosMST[i]->leftNode->id,arcosMST[i]->peso);
     // }
 
-    /* Criando a arvore*/
+    // /* Criando a arvore*/
 
-
+   
     Tree* root = NULL;
 
-    inserir(root,1,arcosMST,numVertices-1,0);
+    inserir(root,1,arcosMST,numVertices-1);
+    
+
+    // printf("\nSoma dos pesos dos arcos da arvore: %.2f\n", calculaPesoTotal( grafo, numVertices-1));
+
+    stop = clock();
+
+    double time_taken = ((double) stop - start) / CLOCKS_PER_SEC;
+    printf("Elapsed time: %.6f\n",time_taken);
 
     //imprimir_pre_ordem(root);
 
-    
-
-    
 
    
    
