@@ -9,38 +9,43 @@ Arco* criaArco(Node* n1, Node* n2, double peso){
     return arch;
 }
 
-// int median_of_3(Arco** a, int lo, int hi){
-//     int mid = (lo + hi)/2;
-//     if(a[mid]->peso < a[lo]->peso){
-//         swap(a,lo,mid);
-//     }
-//     if(a[hi] < a[lo]){
-//         swap(a,lo,hi);
-//     }
-//     if(a[hi] < a[mid]){
-//         swap(a,hi,mid);
-//     }
-
-//     swap(a,mid,hi-1)
 
 
+// void sortArcos(Arco** array,int lo, int hi){ // Quick sort
+
+//     if(hi <= lo) return;
+    
+//     int j = partition_med(array, lo, hi);
+    
+//     sortArcos(array, lo, j-1);
+//     sortArcos(array, j+1, hi);
+    
 // }
 
-void sortArcos(Arco** array,int lo, int hi){ // Quick sort
-    //int CUTOFF = 10;
-
-    // if(hi <= lo + CUTOFF - 1){
-    //     insertion_sort_med(array, lo, hi);
-    //     return;
-    // }
+void quick_sort(Arco** a, int lo, int hi) {
 
     if(hi <= lo) return;
     
-    int j = partition_med(array, lo, hi);
+    int median = median_of_3(a, lo, hi);
+    swap(a,lo,median);
     
-    sortArcos(array, lo, j-1);
-    sortArcos(array, j+1, hi);
-    
+    int j = partition_med(a, lo, hi);
+    quick_sort(a, lo, j-1);
+    quick_sort(a, j+1, hi);
+}
+
+int median_of_3(Arco** a, int left, int right) {
+    int center = (left + right) / 2;
+
+    if (a[center]->peso < a[left]->peso)
+        swap(a, left, center);
+    if (a[right]->peso < a[left]->peso)
+        swap(a, left, right);
+    if (a[right]->peso < a[center]->peso)
+        swap(a, center, right);
+
+    swap(a, center, right - 1);
+    return right - 1;
 }
 
 
@@ -108,6 +113,12 @@ double calculaPesoTotal(Arco** array,int size){
 
 void liberaArco(Arco* a){
     free(a);
+}
+
+void liberaArrayArco(Arco** array,int size){
+    for(int i = 0; i < size; i++){
+        liberaArco(array[i]);
+    }
 }
 
 double getPeso(Arco* a){

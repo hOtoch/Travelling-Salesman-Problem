@@ -9,5 +9,7 @@ int MST_find(int x,int* mst);
 
 void MST_union(int p, int q, int* mst);
 
+void MST_libera(int* mst);
+
 
 #endif 

@@ -19,6 +19,10 @@ void MST_union(int p, int q, int* mst){
     mst[i] = j;
 }
 
+void MST_libera(int* mst){
+    free(mst);
+}
+
 
 
 

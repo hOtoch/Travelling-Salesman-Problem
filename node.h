@@ -24,5 +24,7 @@ double getX(Node* n);
 
 double getY(Node* n);
 
+void liberaArrayNode(Node** array,int size);
+
 
 #endif

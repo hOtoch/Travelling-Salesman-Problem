@@ -18,7 +18,6 @@ void inserir(Tree *arvore, int valor,Arco** arcos,int size) {
     }
     //printf("%d\n",valor);
 
-
     id1= searchNext(valor,arcos,size); 
     if(id1 != 0){
         inserir(arvore->esq, id1,arcos,size);
@@ -32,24 +31,6 @@ void inserir(Tree *arvore, int valor,Arco** arcos,int size) {
     
 
 }
-// Tree *pre_ordem_iterativo(Tree *arvore) {
-//     if (arvore == NULL) {
-//         return NULL;
-//     }
-//     Tree *tree = criar_arvore(arvore->valor);
-//     inserir(tree, arvore->valor);
-//     while (!arvore->esq == NULL) {
-//         Tree *node = remover(arvore, arvore->esq->valor);
-//         printf("%d ", node->valor);
-//         if (node->dir != NULL) {
-//             inserir(tree, node->dir->valor);
-//         }
-//         if (node->esq != NULL) {
-//             inserir(tree, node->esq->valor);
-//         }
-//     }
-//     return arvore;
-// }
 
 void imprimir_arvore(Tree *arvore) {
     if (arvore == NULL) {
@@ -68,3 +49,13 @@ void imprimir_pre_ordem(Tree *arvore) {
     imprimir_pre_ordem(arvore->esq);
     imprimir_pre_ordem(arvore->dir);
 }
+
+void liberar_arvore(Tree *arvore) {
+    if (arvore == NULL) {
+        return;
+    }
+    liberar_arvore(arvore->esq);
+    liberar_arvore(arvore->dir);
+    free(arvore);
+}
+

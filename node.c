@@ -11,16 +11,10 @@ double calculaDist(int i, int j,Node** vNodes,int numVertices){
     double deltaX,deltaY,dist;
     Node* n1;
     Node* n2;
+
+    n1 = vNodes[i];
+    n2 = vNodes[j];
     
-    for(int x = 0; x < numVertices;x++){
-       
-        if(i == getID(vNodes[x])){           
-            n1 = vNodes[x];
-        }
-        if(j == getID(vNodes[x])){
-            n2 = vNodes[x];
-        }
-    }
 
     deltaX = n2->x - n1->x;
     deltaY = n2->y - n1->y;
@@ -35,7 +29,7 @@ Node* findNode(int i,Node** array,int size){
         if(array[j]->id == i) return array[j];
     }
 
-    return NULL;
+    return 0;
 }
 
 void liberaNode(Node* a){
@@ -52,4 +46,11 @@ double getX(Node* n){
 
 double getY(Node* n){
     return n->y;
+}
+
+void liberaArrayNode(Node** array,int size){
+    for(int i = 0; i < size; i++){
+        liberaNode(array[i]);
+    }
+    free(array);
 }

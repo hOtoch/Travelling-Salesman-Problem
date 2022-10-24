@@ -33,5 +33,10 @@ int searchNext(int idNode,Arco** array,int size);
 
 double calculaPesoTotal(Arco** array,int size);
 
+void liberaArrayArco(Arco** array,int size);
+
+void quick_sort(Arco** a, int lo, int hi);
+
+int median_of_3(Arco** a, int left, int right);
 
 #endif

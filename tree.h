@@ -27,4 +27,6 @@ void imprimir_arvore(Tree *arvore);
 //Funcao para imprimir a arvore em pre-ordem
 void imprimir_pre_ordem(Tree *arvore);
 
+void liberar_arvore(Tree *arvore);
+
 #endif //TREE_TREE_H

@@ -7,6 +7,7 @@
 #include "time.h"
 
 
+
 int main(int argc, char* argv[]){
     clock_t start,stop;
     if(argc < 2){
@@ -16,8 +17,8 @@ int main(int argc, char* argv[]){
 
     /* Leitura do arquivo */
     FILE* entry;
+    
     start = clock();
-
     
     char* fName = argv[1];
 
@@ -82,41 +83,49 @@ int main(int argc, char* argv[]){
 
     fclose(entry);
 
+    
+
     /* Criação da matriz de distâncias */
 
     double** matrizDist = (double**)malloc(numVertices * sizeof(double*));
 
     for(int i = 0; i < numVertices; i++){
         matrizDist[i] = (double*)malloc(numVertices*sizeof(double));
-        for(int j = 0; j < numVertices; j++){       
-            matrizDist[i][j] = calculaDist(i+1,j+1,arrayNode,numVertices);
+        for(int j = 0; j < i; j++){       
+            matrizDist[i][j] = calculaDist(i,j,arrayNode,numVertices);
         }
     }
 
+    
+    
     /* Criação do array de arcos (grafo) */
 
-
-
     int nArcos = (numVertices*(numVertices-1))/2;  /* Calculando o número de arcos considerando G um grafo completo */
+    //printf("%d\n",nArcos);
 
     Arco** grafo = (Arco**)malloc(nArcos*sizeof(Arco*));
+
+    
 
     int sizeAtual = 0;
     Node* n1,*n2;
 
+
     for(int i = 0; i < numVertices; i++){
         for(int j = 0; j < i; j++){
 
-           
-            n1 = findNode(i+1,arrayNode,numVertices);
-            n2 = findNode(j+1,arrayNode,numVertices);
+            n1 = arrayNode[i];
+            n2 = arrayNode[j];
 
             grafo[sizeAtual] = criaArco(n1,n2,matrizDist[i][j]);
             sizeAtual++;
             
-            
         }
     }
+
+    
+   
+    
 
     /* Libera matriz */
     for(int i = 0; i < numVertices; i++){
@@ -126,26 +135,19 @@ int main(int argc, char* argv[]){
 
     
 
-    // for(int i = 0; i < numVertices-1;i++){
-    //         printf("\n%d - (%d - %d) : %.2f\n",i,grafo[i]->rightNode->id,grafo[i]->leftNode->id,grafo[i]->peso);
+
+    quick_sort(grafo,0,nArcos-1);
+    //sortArcos(grafo,0,nArcos-1); // fazer quick sort
+    
+    
+
+    // for(int i = 0; i < nArcos;i++){
+    //     printf("\n%d - (%d - %d) : %.2f\n",i,grafo[i]->rightNode->id,grafo[i]->leftNode->id,grafo[i]->peso);
     // }
 
-    // printf("\n---------------------------------------\n");
-
-    /* Ordenando os arcos do grafo com o Insertion sort (qsort nao funcionou) */
-
     
 
-    sortArcos(grafo,0,nArcos-1); // fazer quick sort
 
-
-    
-
-    for(int i = 0; i < nArcos;i++){
-        //printf("\n%d - (%d - %d) : %.2f\n",i,grafo[i]->rightNode->id,grafo[i]->leftNode->id,grafo[i]->peso);
-    }
-
-    
     
 
     /* Criação da MST */
@@ -153,14 +155,13 @@ int main(int argc, char* argv[]){
     int* mst = MST_init(numVertices);
     Node* nA1;
     Node* nA2;
-    double pesoArco;
     Arco** arcosMST = (Arco**)malloc((numVertices-1)*sizeof(Arco*)); // Array de arcos utilizados na MST
     int posAtual = 0;
 
     for(int i = 0 ; i< nArcos;i++){
         nA1 = grafo[i]->leftNode;
         nA2 = grafo[i]->rightNode;
-        pesoArco = grafo[i]->peso;
+       
 
         if(MST_find(nA1->id-1,mst) != MST_find(nA2->id-1,mst)){
             MST_union(nA1->id-1,nA2->id-1,mst);
@@ -169,12 +170,6 @@ int main(int argc, char* argv[]){
         }
     }
 
-    
-
-
-    // for(int i = 0; i < numVertices-1;i++){
-    //     printf("\n%d - (%d - %d) : %.2f\n",i,arcosMST[i]->rightNode->id,arcosMST[i]->leftNode->id,arcosMST[i]->peso);
-    // }
 
     // /* Criando a arvore*/
 
@@ -182,28 +177,25 @@ int main(int argc, char* argv[]){
     Tree* root = NULL;
 
     inserir(root,1,arcosMST,numVertices-1);
+
+    //criaArquivoSaida(arcosMST, numVertices - 1, arrayNode, numVertices, entry);
+
     
 
-    // printf("\nSoma dos pesos dos arcos da arvore: %.2f\n", calculaPesoTotal( grafo, numVertices-1));
-
-    stop = clock();
-
-    double time_taken = ((double) stop - start) / CLOCKS_PER_SEC;
-    printf("Elapsed time: %.6f\n",time_taken);
 
     //imprimir_pre_ordem(root);
 
+    liberar_arvore(root);
+    liberaArrayNode(arrayNode,numVertices);
+    liberaArrayArco(arcosMST,numVertices-1);
+    liberaArrayArco(grafo,nArcos);
+    MST_libera(mst);
 
-   
-   
-
-    
-
+    stop = clock(); 
+    double time_taken = ((double) stop - start) / CLOCKS_PER_SEC;
+    printf("Elapsed time: %.6f\n",time_taken);
 
 
-
-
-    
     
 }
 
